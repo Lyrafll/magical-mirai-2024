@@ -12,7 +12,7 @@ const animateWord = function (now, unit) {
 
 };
 
-const player = new Player({ app: { token: "9KYlZJUh8ogyfOIb" }, mediaElement: document.querySelector("#media") });
+const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" }, mediaElement: document.querySelector("#media") });
 
 const playBt = document.querySelector("#play");
 
