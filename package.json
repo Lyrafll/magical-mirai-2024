@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Lyrafll/magical-mirai-2024/issues"
   },
-  "homepage": "https://github.com/Lyrafll/magical-mirai-2024#readme"
+  "homepage": "https://github.com/Lyrafll/magical-mirai-2024#readme",
+  "devDependencies": {
+    "buffer": "^6.0.3"
+  }
 }
