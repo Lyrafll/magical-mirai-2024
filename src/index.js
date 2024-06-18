@@ -14,12 +14,12 @@ const animateWord = function (now, unit) {
 
 const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" }, mediaElement: document.querySelector("#media") });
 
-const playBt = document.querySelector("#play");
+const playBtn = document.querySelector("#play");
 
 player.addListener({
     onAppReady: (app) => {
 
-        playBt.addEventListener(
+        playBtn.addEventListener(
             "click",
             () =>
                 player.video &&
@@ -65,14 +65,8 @@ player.addListener({
         // ボタンを有効化する
         // Enable buttons
         if (!player.app.managed) {
-            document
-                .querySelectorAll("button")
-                .forEach((btn) => (btn.disabled = false));
+            playBtn.disabled = false;
         }
-
-        // 歌詞がなければ歌詞頭出しボタンを無効にする
-        // Disable jump button if no lyrics is available
-        //jumpBtn.disabled = !player.video.firstChar;
     }
 
 });
