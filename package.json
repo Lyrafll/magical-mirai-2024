@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "license": "^1.0.3",
+    "parcel": "^2.12.0",
+    "textalive-app-api": "^0.4.0"
+  },
+  "license": "MIT",
+  "name": "magical-mirai-2024-lyrafll",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "parcel src/index.html --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Lyrafll",
+  "description": "Lyrafll submission for Magical Mirai 2024",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lyrafll/magical-mirai-2024.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lyrafll/magical-mirai-2024/issues"
+  },
+  "homepage": "https://github.com/Lyrafll/magical-mirai-2024#readme"
+}
