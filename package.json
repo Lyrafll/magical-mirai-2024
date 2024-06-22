@@ -1,15 +1,17 @@
 {
   "dependencies": {
     "license": "^1.0.3",
-    "parcel": "^2.12.0",
-    "textalive-app-api": "^0.4.0"
+    "textalive-app-api": "^0.4.0",
+    "vite": "^5.3.1"
   },
   "license": "MIT",
   "name": "magical-mirai-2024-lyrafll",
   "version": "1.0.0",
   "scripts": {
-    "start": "parcel src/index.html --open",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "Lyrafll",
