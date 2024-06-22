@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <title>Magical Mirai 2024</title>
-</head>
+  </head>
 
-<body>
-    <div id="overlay"><button id="play" disabled>Play</button><button id="pause">Pause</button></div>
-    <div id="media"></div>
+  <body>
     <span id="text"></span>
+    <canvas id="game" width="1200px" height="900px"> </canvas>
+    <footer>
+      <div id="controls">
+        <button id="play" disabled>Play</button
+        ><button id="pause">Pause</button>
+      </div>
+    </footer>
     <script type="module" src="./index.js"></script>
-</body>
-
+  </body>
 </html>

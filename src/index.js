@@ -2,42 +2,75 @@ import { Player } from "textalive-app-api";
 
 // 単語が発声されていたら #text に表示する
 
-
-class WordProjectile {
-    constructor(text, x, y) {
-        this.text = text;
+class Basket {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
     }
-}
 
-const animateWord = function (now, unit) {
-
-    if (unit.contains(now)) {
-        //console.log(unit.text)
-        let word = new WordProjectile(unit.text, 10, 10);
-        document.querySelector("#text").textContent += unit.text;
-        //console.log(word.text);
-
+    moveX(x) {
+        this.x = x;
     }
 
-};
+    render(context) {
+        context.fillStyle = '#86cecb';
+        context.fillRect(this.x - 50, this.y - 5, 100, 10)
+    }
+}
 
-const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" }, mediaElement: document.querySelector("#media") });
+class WordProjectile {
+    constructor(word, x, y) {
+        this.word = word
+        this.x = x;
+        this.y = y;
+    }
+
+    moveDown() {
+        this.y += 6;
+    }
+    render(context) {
+        context.fillStyle = '#bec8d1';
+        ctx.fillText(this.word.text, this.x, this.y)
+    }
+}
+
+const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" } });
 
 const playBtn = document.querySelector("#play");
 const pauseBtn = document.querySelector("#pause");
 
+var canvas = document.getElementById("game");
+var ctx = canvas.getContext("2d");
+ctx.font = "50px jackeyfont";
+ctx.fillStyle = '#373b3e';
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 const words = [];
+const basket = new Basket(canvas.width / 2, canvas.height - 10);
 
 player.addListener({
     onAppReady: (app) => {
 
         playBtn.addEventListener(
             "click",
-            () =>
+            () => {
                 player.video &&
-                player.requestPlay()
+                    player.requestPlay()
+                setInterval(() => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#373b3e';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    basket.render(ctx);
+
+                    words.forEach((word) => {
+                        if (word.x < canvas.height) {
+                            word.render(ctx)
+                            word.moveDown();
+                        }
+                    })
+                }, 17);
+            }
         );
         pauseBtn.addEventListener(
             "click",
@@ -45,6 +78,14 @@ player.addListener({
                 player.video &&
                 player.requestPause()
         );
+
+        canvas.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            basket.moveX(x);
+        });
 
 
         if (!app.songUrl) {
@@ -63,15 +104,13 @@ player.addListener({
             player.volume = 5;
 
         }
+
+
     },
 
     // 動画オブジェクトの準備が整ったとき（楽曲に関する情報を読み込み終わったとき）に呼ばれる
 
     onVideoReady: (v) => {
-
-
-
-
 
     },
 
@@ -85,24 +124,12 @@ player.addListener({
 
     onTimeUpdate: (position) => {
 
-        const current = player.timer.position;
-        //console.log(position)
-
         // 定期的に呼ばれる各単語の "animate" 関数をセットする
-        let w = player.video.firstChar;
-        let lyrics = "";
-        while (w && w.startTime < current) {
-            console.log("-----------------------------------");
-            if (!words.includes(w)) { // maybe store the last startime and compare it to this instead of a full array search ?
-
-                words.push(w);
-
-                // Do what we want with the new word
-                //w.animate = animateWord;
-                document.querySelector("#text").textContent += w.text;
+        let w = player.video.firstWord;
+        while (w && w.startTime < position) {
+            if (!words.some((word) => word.word === w)) { // maybe store the last startime and compare it to this instead of a full array search ?
+                words.push(new WordProjectile(w, (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 100, 0));
             }
-            //lyrics += w.text;
-            // w.animate = animateWord;
             w = w.next;
         }
     }
