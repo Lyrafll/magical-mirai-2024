@@ -2,6 +2,12 @@
  * WordProjectile class
  */
 export class WordProjectile {
+    /**
+     * 
+     * @param {Word} word 
+     * @param {number} x 
+     * @param {number} y 
+     */
     constructor(word, x, y) {
         this.word = word
         this.x = x;

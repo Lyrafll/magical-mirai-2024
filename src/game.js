@@ -39,8 +39,18 @@ export class Game {
             if (word.x < this.canvas.height) {
                 word.render(this.context)
                 word.moveDown();
+                this.checkCollision(word);
             }
         })
+    }
+
+    checkCollision(word) {
+        // have a better detection system ! 
+        if (word.y >= this.basket.y && word.x <= this.basket.x + 50 && word.x >= this.basket.x - 50) {
+            console.log("+1 !")
+            // remove word from list
+        }
+
     }
 
     /**
