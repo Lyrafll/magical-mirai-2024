@@ -1,3 +1,4 @@
+
 /**
  * WordProjectile class
  */
@@ -21,4 +22,4 @@ export class WordProjectile {
         context.fillStyle = '#bec8d1';
         context.fillText(this.word.text, this.x, this.y)
     }
-}
+}   

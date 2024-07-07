@@ -3,6 +3,7 @@ import { Basket } from "./basket";
 
 
 
+
 export class Game {
 
     words = [];
