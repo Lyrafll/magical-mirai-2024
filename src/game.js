@@ -7,6 +7,7 @@ import { Basket } from "./basket";
 export class Game {
 
     words = [];
+    fallingWords = []
     basket = null;
 
 
@@ -36,11 +37,13 @@ export class Game {
 
         this.basket.render(this.context);
 
-        this.words.forEach((word) => {
-            if (word.x < this.canvas.height) {
+        this.fallingWords.forEach((word) => {
+            if (word.y < this.canvas.height) {
                 word.render(this.context)
                 word.moveDown();
                 this.checkCollision(word);
+            } else {
+                this.fallingWords = this.fallingWords.filter(function (wp) { return wp != word });
             }
         })
     }
@@ -49,6 +52,10 @@ export class Game {
         // have a better detection system ! 
         if (word.y >= this.basket.y && word.x <= this.basket.x + 50 && word.x >= this.basket.x - 50) {
             console.log("+1 !")
+            console.log(this.fallingWords)
+
+            this.fallingWords = this.fallingWords.filter(function (wp) { return wp != word });
+
             // remove word from list
         }
 
@@ -67,7 +74,9 @@ export class Game {
      * @param {string} word 
      */
     addWord(word) {
-        this.words.push(new WordProjectile(word, (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 100, 0))
+        const wp = new WordProjectile(word, (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 100, 0)
+        this.words.push(wp);
+        this.fallingWords.push(wp);
     }
 
     /**
