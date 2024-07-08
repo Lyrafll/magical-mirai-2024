@@ -18,6 +18,11 @@ export class WordProjectile {
     moveDown() {
         this.y += 6;
     }
+
+    getCharCount() {
+        return this.word.charCount;
+    }
+
     render(context) {
         context.fillStyle = '#bec8d1';
         context.fillText(this.word.text, this.x, this.y);

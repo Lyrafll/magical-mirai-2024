@@ -1,5 +1,6 @@
 import { WordProjectile } from "./projectile";
 import { Basket } from "./basket";
+import { Score } from "./score";
 
 
 
@@ -9,6 +10,7 @@ export class Game {
     words = [];
     fallingWords = []
     basket = null;
+    score = new Score()
 
 
     constructor(context, canvas) {
@@ -36,6 +38,8 @@ export class Game {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.basket.render(this.context);
+        this.score.render(this.context)
+
 
         this.fallingWords.forEach((word) => {
             if (word.y < this.canvas.height) {
@@ -44,19 +48,19 @@ export class Game {
                 this.checkCollision(word);
             } else {
                 this.fallingWords = this.fallingWords.filter(function (wp) { return wp != word });
+                this.score.resetMultiplier();
+
             }
+            this.score.render(this.context)
         })
     }
 
     checkCollision(word) {
         // have a better detection system ! 
         if (word.y >= this.basket.y && word.x <= this.basket.x + 50 && word.x >= this.basket.x - 50) {
-            console.log("+1 !")
-            console.log(this.fallingWords)
-
+            this.score.increaseMultiplier();
+            this.score.increaseScore(word.getCharCount());
             this.fallingWords = this.fallingWords.filter(function (wp) { return wp != word });
-
-            // remove word from list
         }
 
     }
