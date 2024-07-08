@@ -56,11 +56,10 @@ export class Game {
     }
 
     checkCollision(word) {
-        // have a better detection system ! 
         if (word.y >= this.basket.y) {
-            if (word.x >= this.basket.x - 50 && word.x <= this.basket.x + 50 ||
-                (word.x + word.getCharCount() * 50) >= this.basket.x - 50 && (word.x + word.getCharCount() * 50) <= this.basket.x + 50 ||
-                word.x <= this.basket.x - 50 && (word.x + word.getCharCount() * 50) >= this.basket.x + 50) {
+            if (word.getLeftBound() >= this.basket.getLeftBound() && word.getLeftBound() <= this.basket.getRightBound() ||
+                word.getRightBound() >= this.basket.getLeftBound() && word.getRightBound() <= this.basket.getRightBound() ||
+                word.getLeftBound() <= this.basket.getLeftBound() && word.getRightBound() >= this.basket.getRightBound()) {
                 this.score.increaseMultiplier();
                 this.score.increaseScore(word.getCharCount());
                 this.fallingWords = this.fallingWords.filter(function (wp) { return wp != word });
