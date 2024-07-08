@@ -16,7 +16,7 @@ export class WordProjectile {
     }
 
     moveDown() {
-        this.y += 6;
+        this.y += 5;
     }
 
     getCharCount() {

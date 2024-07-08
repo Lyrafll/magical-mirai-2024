@@ -24,10 +24,10 @@ export class Score {
         this.multiplier = 0;
     }
 
-    render(context) {
+    render(context, canvas) {
         context.fillStyle = '#bec8d1';
-        context.fillText("Score : " + this.value, 950, 100);
-        context.fillText(this.multiplier + "x", 950, 150);
+        context.fillText("Score : " + this.value, canvas.width - 250, 100);
+        context.fillText(this.multiplier + "x", canvas.width - 250, 150);
 
     }
 }

@@ -38,7 +38,7 @@ export class Game {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.basket.render(this.context);
-        this.score.render(this.context)
+        this.score.render(this.context, this.canvas)
 
 
         this.fallingWords.forEach((word) => {
@@ -51,7 +51,7 @@ export class Game {
                 this.score.resetMultiplier();
 
             }
-            this.score.render(this.context)
+            this.score.render(this.context, this.canvas)
         })
     }
 
