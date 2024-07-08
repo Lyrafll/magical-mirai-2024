@@ -4,6 +4,11 @@ html, body {
     overflow: hidden;
 }
 
+h1, p, span{
+  font-size: 50px;
+  color: #bec8d1;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -21,18 +26,33 @@ html, body {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+.endgame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
 
-.menu button {
+button {
   display: block;
   margin-bottom: 20px;
   padding: 20px 40px;
   font-size: 24px;
-  background-color: #fff;
-  color: #e12885;
-  border: 2px solid #e12885;
+  background-color: #137a7f;
+  color: #bec8d1;
+  border: 2px solid #bec8d1;
   border-radius: 10px;
   cursor: pointer;
+  margin: auto;
 }
+
+button:disabled{
+    background-color: #8fb1b3; /* Lighter and desaturated version of #137a7f */
+    color: #8a9aa6; /* Slightly darker version of #bec8d1 */ 
+    cursor:default;
+}
+
 
 .content {
   text-align: center;

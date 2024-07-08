@@ -5,11 +5,13 @@ import { Game } from "./game";
 
 const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" }, mediaElement: document.querySelector("#media") });
 
-const overlay = document.getElementById('overlay');
-const body = document.getElementsByName('body');
+const overlayStart = document.getElementById('overlay-menu');
+const overlayEndgame = document.getElementById('overlay-endgame');
+
+const score = document.getElementById('score');
+
 
 const playBtn = document.querySelector("#play");
-//const pauseBtn = document.querySelector("#pause");
 
 var canvas = document.getElementById("game");
 
@@ -21,20 +23,31 @@ const game = new Game(ctx, canvas);
 
 player.addListener({
     onAppReady: (app) => {
+        //overlayEndgame.style.display = "block";
 
-        overlay.style.display = "block";
+        overlayStart.style.display = "block";
         playBtn.disabled = true;
 
 
         playBtn.addEventListener(
             "click",
             () => {
-                overlay.style.display = "none";
+                overlayStart.style.display = "none";
 
                 player.video &&
                     player.requestPlay()
-                setInterval(() => {
-                    game.step();
+                let interval = setInterval(() => {
+                    if (player.isPlaying) {
+                        game.step();
+                    } else {
+                        console.log("END GAME")
+                        game.endGame();
+                        if (game.isFinished) {
+                            score.innerText = game.score.getScore();
+                            overlayEndgame.style.display = "block";
+                            clearInterval(interval)
+                        }
+                    }
                 }, 17);
             }
         );
@@ -48,10 +61,17 @@ player.addListener({
         canvas.addEventListener('mousemove', (event) => {
             const rect = canvas.getBoundingClientRect();
             const x = event.clientX - rect.left;
-            //const y = event.clientY - rect.top;
 
             game.moveBasket(x);
         });
+
+        // document.addEventListener('keydown', (event) => {
+        //     if (event.key === 'Escape' || event.key.toLowerCase() === 'p') {
+        //         player.video &&
+        //             player.requestPause();
+        //         clearInterval(this.run);
+        //     }
+        // });
 
 
         if (!app.songUrl) {
@@ -96,6 +116,9 @@ player.addListener({
         const punctuationRegex = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・]/;
 
         let w = player.video.firstWord;
+        if (!player.isPlaying) {
+            console.log("lol")
+        }
 
         while (w && w.startTime < position) {
             if (!punctuationRegex.test(w.text)) {

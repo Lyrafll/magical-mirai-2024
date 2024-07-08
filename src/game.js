@@ -26,6 +26,7 @@ export class Game {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.basket = new Basket(this.canvas.width / 2, this.canvas.height - 40);
+        this.isFinished = false;
     }
 
     /**
@@ -53,6 +54,14 @@ export class Game {
             }
             this.score.render(this.context, this.canvas)
         })
+    }
+
+    endGame() {
+        if (this.fallingWords.length) {
+            this.step();
+        } else {
+            this.isFinished = true;
+        }
     }
 
     checkCollision(word) {
