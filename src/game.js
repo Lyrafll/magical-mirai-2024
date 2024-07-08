@@ -81,7 +81,7 @@ export class Game {
      * @param {string} word 
      */
     addWord(word) {
-        const wp = new WordProjectile(word, (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 100, 0)
+        const wp = new WordProjectile(word, (Math.floor(Math.random() * 7) + 2) * (this.canvas.width / 10), 0)
         this.words.push(wp);
         this.fallingWords.push(wp);
     }

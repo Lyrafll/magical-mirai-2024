@@ -6,6 +6,8 @@ import { Game } from "./game";
 const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" }, mediaElement: document.querySelector("#media") });
 
 const overlay = document.getElementById('overlay');
+const body = document.getElementsByName('body');
+
 const playBtn = document.querySelector("#play");
 //const pauseBtn = document.querySelector("#pause");
 
