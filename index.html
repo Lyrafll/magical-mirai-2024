@@ -8,14 +8,15 @@
   </head>
 
   <body>
-    <span id="text"></span>
-    <canvas id="game"> </canvas>
-    <footer>
-      <div id="controls">
-        <button id="play" disabled>Play</button
-        ><button id="pause">Pause</button>
+    <div class="overlay" id="overlay">
+      <div class="menu">
+        <button id="play" disabled>Play</button>
+        <!--<button id="pause">Pause</button>-->
       </div>
-    </footer>
+    </div>
+    <div class="content">
+      <canvas id="game"> </canvas>
+    </div>
     <div id="media" style="display: none"></div>
     <script type="module" src="./src/index.js"></script>
   </body>

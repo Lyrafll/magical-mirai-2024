@@ -5,8 +5,9 @@ import { Game } from "./game";
 
 const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" }, mediaElement: document.querySelector("#media") });
 
+const overlay = document.getElementById('overlay');
 const playBtn = document.querySelector("#play");
-const pauseBtn = document.querySelector("#pause");
+//const pauseBtn = document.querySelector("#pause");
 
 var canvas = document.getElementById("game");
 
@@ -19,9 +20,15 @@ const game = new Game(ctx, canvas);
 player.addListener({
     onAppReady: (app) => {
 
+        overlay.style.display = "block";
+        playBtn.disabled = true;
+
+
         playBtn.addEventListener(
             "click",
             () => {
+                overlay.style.display = "none";
+
                 player.video &&
                     player.requestPlay()
                 setInterval(() => {
@@ -29,12 +36,12 @@ player.addListener({
                 }, 17);
             }
         );
-        pauseBtn.addEventListener(
+        /*pauseBtn.addEventListener(
             "click",
             () =>
                 player.video &&
                 player.requestPause()
-        );
+        );*/
 
         canvas.addEventListener('mousemove', (event) => {
             const rect = canvas.getBoundingClientRect();
@@ -84,12 +91,12 @@ player.addListener({
     },
 
     onTimeUpdate: (position) => {
-        const punctuationChars = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・]/;
-        // 定期的に呼ばれる各単語の "animate" 関数をセットする
+        const punctuationRegex = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・]/;
+
         let w = player.video.firstWord;
+
         while (w && w.startTime < position) {
-            if (!punctuationChars.test(w.text)) {
-                console.log(w.text)
+            if (!punctuationRegex.test(w.text)) {
                 if (!game.getWords().some((word) => word.word === w)) { // maybe store the last startime and compare it to this instead of a full array search ?
                     game.addWord(w);
                 }
