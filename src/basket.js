@@ -13,6 +13,6 @@ export class Basket {
 
     render(context) {
         context.fillStyle = '#86cecb';
-        context.fillRect(this.x - 50, this.y - 5, 100, 10)
+        context.fillRect(this.x - 50, this.y - 5, 100, 20)
     }
 }

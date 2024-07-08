@@ -25,7 +25,7 @@ export class Game {
         this.context.fillStyle = '#373b3e';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.basket = new Basket(this.canvas.width / 2, this.canvas.height - 20);
+        this.basket = new Basket(this.canvas.width / 2, this.canvas.height - 40);
     }
 
     /**
@@ -58,7 +58,9 @@ export class Game {
     checkCollision(word) {
         // have a better detection system ! 
         if (word.y >= this.basket.y) {
-            if ((this.basket.x - 50) >= word.x && (this.basket.x - 50) <= (word.x + word.getCharCount() * 50) || (this.basket.x + 50) >= word.x && (this.basket.x + 50) <= (word.x + word.getCharCount() * 50)) {
+            if (word.x >= this.basket.x - 50 && word.x <= this.basket.x + 50 ||
+                (word.x + word.getCharCount() * 50) >= this.basket.x - 50 && (word.x + word.getCharCount() * 50) <= this.basket.x + 50 ||
+                word.x <= this.basket.x - 50 && (word.x + word.getCharCount() * 50) >= this.basket.x + 50) {
                 this.score.increaseMultiplier();
                 this.score.increaseScore(word.getCharCount());
                 this.fallingWords = this.fallingWords.filter(function (wp) { return wp != word });

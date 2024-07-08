@@ -26,8 +26,10 @@ export class Score {
 
     render(context, canvas) {
         context.fillStyle = '#bec8d1';
-        context.fillText("Score : " + this.value, canvas.width - 250, 100);
-        context.fillText(this.multiplier + "x", canvas.width - 250, 150);
+        context.textAlign = "right";
+        context.fillText("Score : " + this.value, canvas.width - 20, 100);
+        context.fillText(this.multiplier + "x", canvas.width - 20, 150);
+        context.textAlign = "left";
 
     }
 }

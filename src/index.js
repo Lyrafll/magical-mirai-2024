@@ -3,12 +3,15 @@ import { Game } from "./game";
 
 // 単語が発声されていたら #text に表示する
 
-const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" } });
+const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" }, mediaElement: document.querySelector("#media") });
 
 const playBtn = document.querySelector("#play");
 const pauseBtn = document.querySelector("#pause");
 
 var canvas = document.getElementById("game");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 var ctx = canvas.getContext("2d");
 
 const game = new Game(ctx, canvas);
@@ -81,12 +84,14 @@ player.addListener({
     },
 
     onTimeUpdate: (position) => {
-
+        const punctuationChars = new Set("!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
         // 定期的に呼ばれる各単語の "animate" 関数をセットする
         let w = player.video.firstWord;
         while (w && w.startTime < position) {
-            if (!game.getWords().some((word) => word.word === w)) { // maybe store the last startime and compare it to this instead of a full array search ?
-                game.addWord(w);
+            if (!w.text.includes(punctuationChars)) {
+                if (!game.getWords().some((word) => word.word === w)) { // maybe store the last startime and compare it to this instead of a full array search ?
+                    game.addWord(w);
+                }
             }
             w = w.next;
         }
