@@ -84,11 +84,12 @@ player.addListener({
     },
 
     onTimeUpdate: (position) => {
-        const punctuationChars = new Set("!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
+        const punctuationChars = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・]/;
         // 定期的に呼ばれる各単語の "animate" 関数をセットする
         let w = player.video.firstWord;
         while (w && w.startTime < position) {
-            if (!w.text.includes(punctuationChars)) {
+            if (!punctuationChars.test(w.text)) {
+                console.log(w.text)
                 if (!game.getWords().some((word) => word.word === w)) { // maybe store the last startime and compare it to this instead of a full array search ?
                     game.addWord(w);
                 }
