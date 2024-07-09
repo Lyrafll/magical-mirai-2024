@@ -21,9 +21,10 @@ export class Game {
     }
 
     init() {
-        this.context.font = "50px jackeyfont";
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.fillStyle = '#373b3e';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.font = "50px jackeyfont";
 
         this.basket = new Basket(this.canvas.width / 2, this.canvas.height - 40);
         this.isFinished = false;
@@ -34,6 +35,7 @@ export class Game {
      * Is in charge of updating all the state when game is playing (for example, dropping the words)
      */
     step() {
+
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.fillStyle = '#373b3e';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -62,6 +64,15 @@ export class Game {
         } else {
             this.isFinished = true;
         }
+    }
+
+    resetGame() {
+        this.words = [];
+        this.fallingWords = []
+        this.basket = null;
+        this.score = new Score()
+
+        this.init();
     }
 
     checkCollision(word) {

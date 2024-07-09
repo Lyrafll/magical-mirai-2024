@@ -64,10 +64,6 @@ button:disabled{
 }
 
 
-@font-face {
-    font-family: 'MintsodaLimeGreen';
-    src: url('../assets/MintsodaLimeGreen13X16Regular-4n30l.ttf');
-}
 
 @font-face {
     font-family: 'jackeyfont';

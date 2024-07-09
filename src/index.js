@@ -10,8 +10,8 @@ const overlayEndgame = document.getElementById('overlay-endgame');
 
 const score = document.getElementById('score');
 
-
-const playBtn = document.querySelector("#play");
+const playBtn = document.getElementById("play");
+const replayBtn = document.getElementById('replay')
 
 var canvas = document.getElementById("game");
 
@@ -21,9 +21,25 @@ var ctx = canvas.getContext("2d");
 
 const game = new Game(ctx, canvas);
 
+function startGame() {
+    player.requestPlay()
+
+    let interval = setInterval(() => {
+        if (player.isPlaying) {
+            game.step();
+        } else {
+            game.endGame();
+            if (game.isFinished) {
+                score.innerText = game.score.getScore();
+                overlayEndgame.style.display = "block";
+                clearInterval(interval)
+            }
+        }
+    }, 17);
+}
+
 player.addListener({
     onAppReady: (app) => {
-        //overlayEndgame.style.display = "block";
 
         overlayStart.style.display = "block";
         playBtn.disabled = true;
@@ -32,31 +48,20 @@ player.addListener({
         playBtn.addEventListener(
             "click",
             () => {
-                overlayStart.style.display = "none";
-
-                player.video &&
-                    player.requestPlay()
-                let interval = setInterval(() => {
-                    if (player.isPlaying) {
-                        game.step();
-                    } else {
-                        console.log("END GAME")
-                        game.endGame();
-                        if (game.isFinished) {
-                            score.innerText = game.score.getScore();
-                            overlayEndgame.style.display = "block";
-                            clearInterval(interval)
-                        }
-                    }
-                }, 17);
+                if (!playBtn.disabled) {
+                    console.log("called")
+                    overlayStart.style.display = "none";
+                    startGame();
+                }
             }
         );
-        /*pauseBtn.addEventListener(
-            "click",
-            () =>
-                player.video &&
-                player.requestPause()
-        );*/
+
+        replayBtn.addEventListener("click", () => {
+            game.resetGame();
+
+            overlayEndgame.style.display = "none";
+            startGame();
+        })
 
         canvas.addEventListener('mousemove', (event) => {
             const rect = canvas.getBoundingClientRect();
@@ -64,14 +69,6 @@ player.addListener({
 
             game.moveBasket(x);
         });
-
-        // document.addEventListener('keydown', (event) => {
-        //     if (event.key === 'Escape' || event.key.toLowerCase() === 'p') {
-        //         player.video &&
-        //             player.requestPause();
-        //         clearInterval(this.run);
-        //     }
-        // });
 
 
         if (!app.songUrl) {
@@ -98,8 +95,8 @@ player.addListener({
 
     // 動画オブジェクトの準備が整ったとき（楽曲に関する情報を読み込み終わったとき）に呼ばれる
 
-    onVideoReady: (v) => {
-
+    onPlay: () => {
+        console.log("onPlay")
     },
 
     onTimerReady: (t) => {
@@ -107,18 +104,15 @@ player.addListener({
         // Enable buttons
         if (!player.app.managed) {
             playBtn.disabled = false;
-            console.log("ready")
 
         }
     },
 
     onTimeUpdate: (position) => {
         const punctuationRegex = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・]/;
+        console.log(position)
 
         let w = player.video.firstWord;
-        if (!player.isPlaying) {
-            console.log("lol")
-        }
 
         while (w && w.startTime < position) {
             if (!punctuationRegex.test(w.text)) {
