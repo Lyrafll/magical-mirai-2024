@@ -23,16 +23,9 @@ var ctx = canvas.getContext("2d");
 const game = new Game(ctx, canvas);
 
 function startGame() {
-    console.log("i: " + player.timer.position)
-
-    player.requestMediaSeek(0)
-    console.log("j: " + player.timer.position)
-
-    player.requestPlay()
-    console.log("k: " + player.timer.position)
 
     player.timer.seek(0)
-    console.log("h: " + player.timer.position)
+    player.requestPlay()
 
     let interval = setInterval(() => {
         if (player.isPlaying) {
@@ -52,9 +45,9 @@ function startGame() {
 player.addListener({
     onAppReady: (app) => {
 
-        overlayEndgame.style.display = "block";
+        // overlayEndgame.style.display = "block";
 
-        //overlayStart.style.display = "block";
+        overlayStart.style.display = "block";
         playBtn.disabled = true;
 
 
@@ -70,7 +63,6 @@ player.addListener({
 
         replayBtn.addEventListener("click", () => {
             game.resetGame();
-            console.log(game.getWords().length)
             overlayEndgame.style.display = "none";
             startGame();
         })
@@ -126,7 +118,6 @@ player.addListener({
             return;
         }
         const punctuationRegex = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・]/;
-        console.log(position)
 
         let w = player.video.firstWord;
 
