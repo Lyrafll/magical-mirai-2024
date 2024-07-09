@@ -1,5 +1,5 @@
 # Hatsune Miku Magical Mirai 2024 - Sekai Basket
-Welcome to my participation for the 2024 Hatsune Miku Magical Mirai contest !
+Welcome to my participation for the [2024 Hatsune Miku Magical Mirai contest](https://magicalmirai.com/2024/procon/index_en.html) !
 
 In here you will find a simplistic web game built with the [TextAlive API](https://developer.textalive.jp/) !
 
