@@ -2,9 +2,6 @@ import { WordProjectile } from "./projectile";
 import { Basket } from "./basket";
 import { Score } from "./score";
 
-
-
-
 export class Game {
 
     words = [];
@@ -21,6 +18,8 @@ export class Game {
     }
 
     init() {
+
+        // canvas cleaning
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.fillStyle = '#373b3e';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -36,14 +35,17 @@ export class Game {
      */
     step() {
 
+        // canvas cleaning
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.fillStyle = '#373b3e';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // Renders
         this.basket.render(this.context);
         this.score.render(this.context, this.canvas)
 
 
+        // Update and render all falling words
         this.fallingWords.forEach((word) => {
             if (word.y < this.canvas.height) {
                 word.render(this.context)
@@ -58,6 +60,9 @@ export class Game {
         })
     }
 
+    /**
+     * Runs the game until there are no more falling words, then declare the game finished
+     */
     endGame() {
         if (this.fallingWords.length) {
             this.step();
@@ -66,6 +71,9 @@ export class Game {
         }
     }
 
+    /**
+     * Resets the game
+     */
     resetGame() {
         this.words = [];
         this.fallingWords = []
@@ -75,13 +83,20 @@ export class Game {
         this.init();
     }
 
+    /**
+     * Check collision of WP with the basket 
+     * @param {WordProjectile} word 
+     */
     checkCollision(word) {
         if (word.y >= this.basket.y) {
+            // Make sure the word can get catch by the basket
             if (word.getLeftBound() >= this.basket.getLeftBound() && word.getLeftBound() <= this.basket.getRightBound() ||
                 word.getRightBound() >= this.basket.getLeftBound() && word.getRightBound() <= this.basket.getRightBound() ||
                 word.getLeftBound() <= this.basket.getLeftBound() && word.getRightBound() >= this.basket.getRightBound()) {
                 this.score.increaseMultiplier();
                 this.score.increaseScore(word.getCharCount());
+
+                // remove the word from the falling list
                 this.fallingWords = this.fallingWords.filter(function (wp) { return wp != word });
             }
         }

@@ -22,9 +22,14 @@ var ctx = canvas.getContext("2d");
 
 const game = new Game(ctx, canvas);
 
+/**
+ * Start a new game
+ * - requests play
+ * - set an interval to play the game (ganme.step) until game is finished
+ */
 function startGame() {
 
-    player.timer.seek(0)
+    player.timer.seek(0) // there to set to 0 position when starting a new game, otherwise the timer starts counting randomly...
     player.requestPlay()
 
     let interval = setInterval(() => {
@@ -45,12 +50,12 @@ function startGame() {
 player.addListener({
     onAppReady: (app) => {
 
-        // overlayEndgame.style.display = "block";
-
         overlayStart.style.display = "block";
         playBtn.disabled = true;
 
-
+        /**
+         * play button to play a new game
+         */
         playBtn.addEventListener(
             "click",
             () => {
@@ -61,12 +66,18 @@ player.addListener({
             }
         );
 
+        /**
+         * replay button to start a new game
+         */
         replayBtn.addEventListener("click", () => {
             game.resetGame();
             overlayEndgame.style.display = "none";
             startGame();
         })
 
+        /**
+         * Mouse movement event to update the basket position
+         */
         canvas.addEventListener('mousemove', (event) => {
             const rect = canvas.getBoundingClientRect();
             const x = event.clientX - rect.left;
@@ -76,18 +87,83 @@ player.addListener({
 
 
         if (!app.songUrl) {
-            // フューチャーノーツ / shikisai
-            player.createFromSongUrl("https://piapro.jp/t/XiaI/20240201203346", {
+            // SUPERHERO / めろくる
+            player.createFromSongUrl("https://piapro.jp/t/hZ35/20240130103028", {
                 video: {
                     // 音楽地図訂正履歴
-                    beatId: 4592297,
-                    chordId: 2727637,
-                    repetitiveSegmentId: 2824328,
-                    // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FXiaI%2F20240201203346
-                    lyricId: 59417,
-                    lyricDiffId: 13964
+                    beatId: 4592293,
+                    chordId: 2727635,
+                    repetitiveSegmentId: 2824326,
+                    // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FhZ35%2F20240130103028
+                    lyricId: 59415,
+                    lyricDiffId: 13962
                 },
             });
+
+            // いつか君と話したミライは / タケノコ少年
+            // player.createFromSongUrl("https://piapro.jp/t/--OD/20240202150903", {
+            //   video: {
+            //     // 音楽地図訂正履歴
+            //      beatId: 4592296,
+            //      chordId: 2727636,
+            //      repetitiveSegmentId: 2824327,
+            //      // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2F--OD%2F20240202150903
+            //      lyricId: 59416,
+            //      lyricDiffId: 13963
+            //    },
+            //  });
+
+            // フューチャーノーツ / shikisai
+            // player.createFromSongUrl("https://piapro.jp/t/XiaI/20240201203346", {
+            //   video: {
+            //     // 音楽地図訂正履歴
+            //      beatId: 4592297,
+            //      chordId: 2727637,
+            //      repetitiveSegmentId: 2824328,
+            //      // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FXiaI%2F20240201203346
+            //      lyricId: 59417,
+            //      lyricDiffId: 13964
+            //    },
+            //  });
+
+            // 未来交響曲 / ヤマギシコージ
+            // player.createFromSongUrl("https://piapro.jp/t/Rejk/20240202164429", {
+            //   video: {
+            //     // 音楽地図訂正履歴
+            //      beatId: 4592298,
+            //      chordId: 2727638,
+            //      repetitiveSegmentId: 2824329,
+            //      // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FRejk%2F20240202164429
+            //      lyricId: 59418,
+            //      lyricDiffId: 13965
+            //    },
+            //  });
+
+            // リアリティ / 歩く人
+            // player.createFromSongUrl("https://piapro.jp/t/ELIC/20240130010349", {
+            //   video: {
+            //     // 音楽地図訂正履歴
+            //      beatId: 4592299,
+            //      chordId: 2727639,
+            //      repetitiveSegmentId: 2824330,
+            //      // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FELIC%2F20240130010349
+            //      lyricId: 59419,
+            //      lyricDiffId: 13966
+            //    },
+            //  });
+
+            // The Marks / 2ouDNS
+            // player.createFromSongUrl("https://piapro.jp/t/xEA7/20240202002556", {
+            //   video: {
+            //     // 音楽地図訂正履歴
+            //      beatId: 4592300,
+            //      chordId: 2727640,
+            //      repetitiveSegmentId: 2824331,
+            //      // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FxEA7%2F20240202002556
+            //      lyricId: 59420,
+            //      lyricDiffId: 13967
+            //    },
+            //  });
             player.volume = 5;
 
         }
@@ -97,33 +173,33 @@ player.addListener({
 
     },
 
-    // 動画オブジェクトの準備が整ったとき（楽曲に関する情報を読み込み終わったとき）に呼ばれる
-
+    // Gets called for no reason sometimes
     onPlay: () => {
         console.log("onPlay")
         playing = true;
     },
 
     onTimerReady: (t) => {
-        // ボタンを有効化する
         // Enable buttons
         if (!player.app.managed) {
             playBtn.disabled = false;
-
         }
     },
 
     onTimeUpdate: (position) => {
+        // There to prevent word generation when app is not "playing" (There is an issue with the replay button where for 1 timer update the position will be at max, so it will gen all words)
         if (!playing) {
             return;
         }
-        const punctuationRegex = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・]/;
+
+        // Regex to remove words containing punctuations
+        const punctuationRegex = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・「」『』【】（）？！“”：；〜…～‘’]/;
 
         let w = player.video.firstWord;
 
         while (w && w.startTime < position) {
             if (!punctuationRegex.test(w.text)) {
-                if (!game.getWords().some((word) => word.word === w)) { // maybe store the last startime and compare it to this instead of a full array search ?
+                if (!game.getWords().some((word) => word.word === w)) { //only add word if not present already
                     game.addWord(w);
                 }
             }
