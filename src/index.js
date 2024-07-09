@@ -9,6 +9,7 @@ const overlayStart = document.getElementById('overlay-menu');
 const overlayEndgame = document.getElementById('overlay-endgame');
 
 const score = document.getElementById('score');
+var playing = false;
 
 const playBtn = document.getElementById("play");
 const replayBtn = document.getElementById('replay')
@@ -22,7 +23,16 @@ var ctx = canvas.getContext("2d");
 const game = new Game(ctx, canvas);
 
 function startGame() {
+    console.log("i: " + player.timer.position)
+
+    player.requestMediaSeek(0)
+    console.log("j: " + player.timer.position)
+
     player.requestPlay()
+    console.log("k: " + player.timer.position)
+
+    player.timer.seek(0)
+    console.log("h: " + player.timer.position)
 
     let interval = setInterval(() => {
         if (player.isPlaying) {
@@ -32,6 +42,7 @@ function startGame() {
             if (game.isFinished) {
                 score.innerText = game.score.getScore();
                 overlayEndgame.style.display = "block";
+                playing = false;
                 clearInterval(interval)
             }
         }
@@ -41,7 +52,9 @@ function startGame() {
 player.addListener({
     onAppReady: (app) => {
 
-        overlayStart.style.display = "block";
+        overlayEndgame.style.display = "block";
+
+        //overlayStart.style.display = "block";
         playBtn.disabled = true;
 
 
@@ -49,7 +62,6 @@ player.addListener({
             "click",
             () => {
                 if (!playBtn.disabled) {
-                    console.log("called")
                     overlayStart.style.display = "none";
                     startGame();
                 }
@@ -58,7 +70,7 @@ player.addListener({
 
         replayBtn.addEventListener("click", () => {
             game.resetGame();
-
+            console.log(game.getWords().length)
             overlayEndgame.style.display = "none";
             startGame();
         })
@@ -97,6 +109,7 @@ player.addListener({
 
     onPlay: () => {
         console.log("onPlay")
+        playing = true;
     },
 
     onTimerReady: (t) => {
@@ -109,6 +122,9 @@ player.addListener({
     },
 
     onTimeUpdate: (position) => {
+        if (!playing) {
+            return;
+        }
         const punctuationRegex = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~・、。・]/;
         console.log(position)
 
