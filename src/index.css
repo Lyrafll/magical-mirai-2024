@@ -63,8 +63,6 @@ button:disabled{
   filter: blur(5px); /* Blur effect for the main content */
 }
 
-
-
 @font-face {
     font-family: 'jackeyfont';
     src: url('../assets/jackeyfont.ttf');
