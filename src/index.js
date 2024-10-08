@@ -1,9 +1,10 @@
 import { Player } from "textalive-app-api";
 import { Game } from "./game";
+import { API_TOKEN } from "../untracked/config";
 
 // 単語が発声されていたら #text に表示する
 
-const player = new Player({ app: { token: "eZ2xkHnnUWrJKQRG" }, mediaElement: document.querySelector("#media") });
+const player = new Player({ app: { token: API_TOKEN }, mediaElement: document.querySelector("#media") });
 
 const overlayStart = document.getElementById('overlay-menu');
 const overlayEndgame = document.getElementById('overlay-endgame');
